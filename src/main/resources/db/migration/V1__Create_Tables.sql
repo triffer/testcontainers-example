@@ -1,0 +1,11 @@
+CREATE TABLE person (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255)
+);
+
+CREATE TABLE message(
+  id BIGSERIAL PRIMARY KEY,
+  subject VARCHAR(255),
+  text VARCHAR(255),
+  person_id BIGSERIAL
+);
