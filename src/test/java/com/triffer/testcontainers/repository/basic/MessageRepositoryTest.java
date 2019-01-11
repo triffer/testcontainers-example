@@ -16,8 +16,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-import com.triffer.testcontainers.model.Message;
-import com.triffer.testcontainers.repository.MessageRepository;
+import com.triffer.testcontainers.message.Message;
+import com.triffer.testcontainers.message.MessageRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;

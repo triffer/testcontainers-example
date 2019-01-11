@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.model;
+package com.triffer.testcontainers.message;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,8 +1,5 @@
 package com.triffer.testcontainers.repository.base_class;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -26,6 +23,8 @@ public abstract class RepositoryTestBase {
     static {
         postgresContainer.start();
     }
+
+    @ContextConfiguration
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 

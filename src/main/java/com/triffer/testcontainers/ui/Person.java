@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.model;
+package com.triffer.testcontainers.ui;
 
 import java.util.Set;
 
@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import com.triffer.testcontainers.message.Message;
 
 import lombok.Data;
 
