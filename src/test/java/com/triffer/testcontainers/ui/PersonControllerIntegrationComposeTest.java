@@ -90,12 +90,10 @@ public class PersonControllerIntegrationComposeTest {
 
         // when
         /*
-        You can expose host ports to the containers but this is not working for me on Windows.
+        You can expose host ports to the containers but this is not working for me on Windows (may be because it'S currently best efforts).
         Testcontainers.exposeHostPorts(Integer.valueOf(serverPort));
         remoteWebDriver.get("http://host.testcontainers.internal:" + serverPort + "/persons");
         */
-
-        // TODO evaluate why expose host ports to containers is not working
         remoteWebDriver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
         // then

@@ -66,8 +66,7 @@ public class PersonControllerIntegrationTest {
         RemoteWebDriver driver = chrome.getWebDriver();
 
         // when
-        // TODO evaluate why getTestHostIpAddress and expose host ports to containers is not working
-        // You should use chrome.getTestHostIpAddress(), but this lead to an error in my case.
+        // You should use chrome.getTestHostIpAddress(), but this is not working for me on Windows (may be because it'S currently best efforts).
         driver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
         // then
