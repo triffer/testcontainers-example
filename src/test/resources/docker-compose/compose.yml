@@ -1,0 +1,10 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:9.6.8
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test1
+      - POSTGRES_PASSWORD=test1
+  selenium:
+    image: selenium/standalone-chrome-debug:3.141.59

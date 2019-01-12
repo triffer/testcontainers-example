@@ -3,6 +3,7 @@ package com.triffer.testcontainers.ui;
 import java.net.Inet4Address;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -27,7 +28,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = PersonControllerIntegrationTest.Initializer.class)
 public class PersonControllerIntegrationTest {
 
@@ -45,7 +46,7 @@ public class PersonControllerIntegrationTest {
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
         @Override
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+        public void initialize(@NotNull ConfigurableApplicationContext configurableApplicationContext) {
             TestPropertyValues values = TestPropertyValues.of("spring.datasource.url=" + postgresContainer.getJdbcUrl(),
                     "spring.datasource.password=" + postgresContainer.getPassword(),
                     "spring.datasource.username=" + postgresContainer.getUsername());
@@ -56,9 +57,8 @@ public class PersonControllerIntegrationTest {
     @Test
     @SqlGroup({
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestBefore.sql"),
-            @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestAfter.sql")
-    })
-    public void index() throws Exception {
+            @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestAfter.sql") })
+    public void personsFromDbAreShownOnPage() throws Exception {
         // given
         String serverAddress = Inet4Address.getLocalHost().getHostAddress();
         RemoteWebDriver driver = chrome.getWebDriver();
@@ -66,6 +66,7 @@ public class PersonControllerIntegrationTest {
         // when
         driver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
+        // then
         List<WebElement> pElements = driver.findElementsByTagName("p");
 
         Assert.assertEquals(3, pElements.size());
