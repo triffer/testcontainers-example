@@ -89,6 +89,7 @@ public class PersonControllerIntegrationComposeTest {
         String serverAddress = Inet4Address.getLocalHost().getHostAddress();
 
         // when
+        // TODO evaluate why expose host ports to containers is not working
         remoteWebDriver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
         // then

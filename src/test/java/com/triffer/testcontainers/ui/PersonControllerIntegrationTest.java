@@ -1,5 +1,6 @@
 package com.triffer.testcontainers.ui;
 
+import java.io.File;
 import java.net.Inet4Address;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -41,7 +43,7 @@ public class PersonControllerIntegrationTest {
 
     @Rule
     public BrowserWebDriverContainer chrome = new BrowserWebDriverContainer()
-            .withCapabilities(DesiredCapabilities.chrome());
+     .withCapabilities(DesiredCapabilities.chrome()).withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING, new File("build"));
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
@@ -64,6 +66,8 @@ public class PersonControllerIntegrationTest {
         RemoteWebDriver driver = chrome.getWebDriver();
 
         // when
+        // TODO evaluate why getTestHostIpAddress and expose host ports to containers is not working
+        // You shoul use chrome.getTestHostIpAddress(), but this lead to an error in my case
         driver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
         // then
