@@ -67,7 +67,7 @@ public class PersonControllerIntegrationTest {
 
         // when
         // TODO evaluate why getTestHostIpAddress and expose host ports to containers is not working
-        // You shoul use chrome.getTestHostIpAddress(), but this lead to an error in my case
+        // You should use chrome.getTestHostIpAddress(), but this lead to an error in my case.
         driver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
         // then
