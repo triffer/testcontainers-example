@@ -1,23 +1,24 @@
 package com.triffer.testcontainers;
 
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ContextConfiguration(initializers = TestcontainersExampleApplicationTests.Initializer.class)
-public class TestcontainersExampleApplicationTests {
+class TestcontainersExampleApplicationTests {
 
-    @ClassRule
-    public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer().withPassword("testpw")
+    @Container
+    static PostgreSQLContainer postgresContainer = new PostgreSQLContainer().withPassword("testpw")
             .withUsername("testuser");
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
@@ -34,7 +35,7 @@ public class TestcontainersExampleApplicationTests {
     }
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
     }
 
 }

@@ -1,38 +1,37 @@
 package com.triffer.testcontainers.repository.base_class;
 
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-@RunWith(SpringRunner.class)
+@Testcontainers
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ContextConfiguration(initializers = RepositoryTestBase.Initializer.class)
-public abstract class RepositoryTestBase {
+abstract class RepositoryTestBase {
 
-    // We can't use the ClassRule here, because after the first tests the connection pool would be closed
-    private static PostgreSQLContainer postgresContainer = new PostgreSQLContainer().withPassword("test")
+    private static PostgreSQLContainer POSTGRES_CONTAINER = new PostgreSQLContainer().withPassword("test")
             .withUsername("test");
 
-    // Starting the container like this it is now shared between all tests that use this class, so parallel DB tests
-    // may lead to problems
+    // The container will be stopped when the JVM is shut down
     static {
-        postgresContainer.start();
+        POSTGRES_CONTAINER.start();
     }
 
     @ContextConfiguration
-
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
         @Override
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues values = TestPropertyValues.of("spring.datasource.url=" + postgresContainer.getJdbcUrl(),
-                    "spring.datasource.password=" + postgresContainer.getPassword(),
-                    "spring.datasource.username=" + postgresContainer.getUsername());
+            TestPropertyValues values = TestPropertyValues.of("spring.datasource.url=" + POSTGRES_CONTAINER.getJdbcUrl(),
+                    "spring.datasource.password=" + POSTGRES_CONTAINER.getPassword(),
+                    "spring.datasource.username=" + POSTGRES_CONTAINER.getUsername());
             values.applyTo(configurableApplicationContext);
         }
     }

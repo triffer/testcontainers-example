@@ -3,7 +3,8 @@ package com.triffer.testcontainers.repository.basic;
 import java.util.Set;
 
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +14,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.triffer.testcontainers.message.Message;
 import com.triffer.testcontainers.message.MessageRepository;
@@ -23,13 +27,14 @@ import static org.junit.Assert.assertEquals;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@RunWith(SpringRunner.class)
+@Testcontainers
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ContextConfiguration(initializers = MessageRepositoryTest.Initializer.class)
-public class MessageRepositoryTest {
+class MessageRepositoryTest {
 
-    @ClassRule
-    public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer().withPassword("test")
+    @Container
+    private static PostgreSQLContainer postgresContainer = new PostgreSQLContainer().withPassword("test")
             .withUsername("test");
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
@@ -51,7 +56,7 @@ public class MessageRepositoryTest {
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/message/findBySubjectContainingIgnoreCaseBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/message/clean.sql")
     })
-    public void findBySubjectContainingIgnoreCase() {
+    void findBySubjectContainingIgnoreCase() {
         // when
         Set<Message> result = subjectUnderTest.findBySubjectContainingIgnoreCase("spam");
 
@@ -64,7 +69,7 @@ public class MessageRepositoryTest {
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/message/findByTextContainingIgnoreCaseBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/message/clean.sql")
     })
-    public void findByTextContainingIgnoreCase() {
+    void findByTextContainingIgnoreCase() {
         // when
         Set<Message> result = subjectUnderTest.findByTextContainingIgnoreCase("important");
 

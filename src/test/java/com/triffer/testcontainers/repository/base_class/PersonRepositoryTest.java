@@ -3,7 +3,7 @@ package com.triffer.testcontainers.repository.base_class;
 import java.util.Optional;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-public class PersonRepositoryTest extends RepositoryTestBase {
+class PersonRepositoryTest extends RepositoryTestBase {
 
     @Autowired
     private PersonRepository subjectUnderTest;
@@ -27,7 +27,7 @@ public class PersonRepositoryTest extends RepositoryTestBase {
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/findByNameBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/findByNameAfter.sql")
     })
-    public void findByName() {
+    void findByName() {
         // when
         Set<Person> result = subjectUnderTest.findByName("John");
 
@@ -40,7 +40,7 @@ public class PersonRepositoryTest extends RepositoryTestBase {
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/findByIdWithMessagesBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/findByIdWithMessagesAfter.sql")
     })
-    public void findByIdWithMessages() {
+    void findByIdWithMessages() {
         // when
         Optional<Person> result = subjectUnderTest.findById(1L);
 

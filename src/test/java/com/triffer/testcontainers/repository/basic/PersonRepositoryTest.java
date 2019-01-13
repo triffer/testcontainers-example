@@ -4,7 +4,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +15,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.triffer.testcontainers.ui.Person;
 import com.triffer.testcontainers.ui.PersonRepository;
@@ -25,13 +29,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.*;
 
-@RunWith(SpringRunner.class)
+@Testcontainers
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ContextConfiguration(initializers = PersonRepositoryTest.Initializer.class)
-public class PersonRepositoryTest {
+class PersonRepositoryTest {
 
-    @ClassRule
-    public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer().withPassword("test")
+    @Container
+    private static PostgreSQLContainer postgresContainer = new PostgreSQLContainer().withPassword("test")
             .withUsername("test");
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
@@ -53,7 +58,7 @@ public class PersonRepositoryTest {
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/findByNameBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/findByNameAfter.sql")
     })
-    public void findByName() {
+    void findByName() {
         // when
         Set<Person> result = subjectUnderTest.findByName("John");
 
@@ -66,7 +71,7 @@ public class PersonRepositoryTest {
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/findByIdWithMessagesBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/findByIdWithMessagesAfter.sql")
     })
-    public void findByIdWithMessages() {
+    void findByIdWithMessages() {
         // when
         Optional<Person> result = subjectUnderTest.findById(1L);
 

@@ -10,9 +10,8 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -24,31 +23,31 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@RunWith(SpringRunner.class)
+@Testcontainers
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = PersonControllerIntegrationComposeTest.Initializer.class)
-public class PersonControllerIntegrationComposeTest {
+class PersonControllerIntegrationComposeTest {
 
     @LocalServerPort
     private String serverPort;
 
     private static RemoteWebDriver remoteWebDriver;
 
-    private static String POSTGRES_DB = "test";
-    private static String POSTGRES_USER = "test1";
-    private static String POSTGRES_PASSWORD = "test1";
     private static int POSTGRES_PORT = 5432;
     private static int SELENIUM_PORT = 4444;
 
-    @ClassRule
-    public static DockerComposeContainer environment = new DockerComposeContainer(
+    @Container
+    private static DockerComposeContainer environment = new DockerComposeContainer(
             new File("src/test/resources/docker-compose/compose.yml")).withExposedService("postgres_1", POSTGRES_PORT,
             Wait.forLogMessage(".*database system is ready to accept connections.*\\s", 2)
                     .withStartupTimeout(Duration.of(60L, ChronoUnit.SECONDS)))
@@ -60,6 +59,11 @@ public class PersonControllerIntegrationComposeTest {
 
         @Override
         public void initialize(@NotNull ConfigurableApplicationContext configurableApplicationContext) {
+
+            final String POSTGRES_DB = "test";
+            final String POSTGRES_USER = "test1";
+            final String POSTGRES_PASSWORD = "test1";
+
             String postgresHostAndPort = environment.getServiceHost("postgres_1", POSTGRES_PORT) + ":" + environment
                     .getServicePort("postgres_1", POSTGRES_PORT);
             String postgresJdbcUrl = "jdbc:postgresql://" + postgresHostAndPort + "/" + POSTGRES_DB;
@@ -84,7 +88,7 @@ public class PersonControllerIntegrationComposeTest {
     @SqlGroup({
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestAfter.sql") })
-    public void personsFromDbAreShownOnPage() throws Exception {
+    void personsFromDbAreShownOnPage() throws Exception {
         // given
         String serverAddress = Inet4Address.getLocalHost().getHostAddress();
 
