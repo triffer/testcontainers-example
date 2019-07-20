@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.1.RELEASE'
-        testcontainersVersion = '1.10.5'
+        springBootVersion = '2.1.6.RELEASE'
+        testcontainersVersion = '1.11.4'
         seleniumVersion = '3.141.59'
     }
     repositories {
@@ -55,5 +55,6 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:${testcontainersVersion}"
     testImplementation "org.testcontainers:selenium:${testcontainersVersion}"
     testImplementation 'org.projectlombok:lombok'
+    testImplementation 'org.apache.httpcomponents:httpclient:4.5.9'
 
 }

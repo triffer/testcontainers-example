@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.ui;
+package com.triffer.testcontainers.person;
 
 import java.util.Set;
 

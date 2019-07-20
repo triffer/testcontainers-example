@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.ui;
+package com.triffer.testcontainers.person;
 
 import java.io.File;
 import java.net.Inet4Address;
@@ -22,7 +22,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -43,7 +42,7 @@ public class PersonControllerIntegrationTest {
 
     @Rule
     public BrowserWebDriverContainer chrome = new BrowserWebDriverContainer()
-     .withCapabilities(DesiredCapabilities.chrome()).withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING, new File("build"));
+     .withCapabilities(DesiredCapabilities.chrome()).withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, new File("build"));
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
@@ -66,12 +65,14 @@ public class PersonControllerIntegrationTest {
         RemoteWebDriver driver = chrome.getWebDriver();
 
         // when
-        // TODO evaluate why getTestHostIpAddress and expose host ports to containers is not working
         // You should use chrome.getTestHostIpAddress(), but this lead to an error in my case.
         driver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
         // then
         List<WebElement> pElements = driver.findElementsByTagName("p");
+
+        // Just to get a longer video
+        Thread.sleep(3000);
 
         Assert.assertEquals(3, pElements.size());
         Assert.assertEquals("John", pElements.get(0).getText());

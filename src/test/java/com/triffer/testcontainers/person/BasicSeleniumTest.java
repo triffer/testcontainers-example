@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.ui;
+package com.triffer.testcontainers.person;
 
 import java.io.File;
 
@@ -18,12 +18,15 @@ public class BasicSeleniumTest {
             .withCapabilities(DesiredCapabilities.chrome()).withRecordingMode(RECORD_ALL, new File("build"));
 
     @Test
-    public void openTestcontainersWebsiteTest() {
+    public void openTestcontainersWebsiteTest() throws Exception {
         // given
         RemoteWebDriver driver = chrome.getWebDriver();
 
         // when
         driver.get("https://www.testcontainers.org/");
+
+        // Just to get a longer video
+        Thread.sleep(3000);
 
         // then
         assertTrue(driver.getTitle().contains("Testcontainers"));

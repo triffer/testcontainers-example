@@ -25,7 +25,6 @@ public abstract class RepositoryTestBase {
     }
 
     @ContextConfiguration
-
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
         @Override

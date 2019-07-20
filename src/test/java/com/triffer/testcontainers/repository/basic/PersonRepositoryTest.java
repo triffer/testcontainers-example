@@ -17,8 +17,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-import com.triffer.testcontainers.ui.Person;
-import com.triffer.testcontainers.ui.PersonRepository;
+import com.triffer.testcontainers.person.Person;
+import com.triffer.testcontainers.person.PersonRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
