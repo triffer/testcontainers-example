@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.ui;
+package com.triffer.testcontainers.person;
 
 import java.io.File;
 
@@ -14,19 +14,23 @@ import static org.junit.Assert.assertTrue;
 import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
 
 @Testcontainers
-class BasicSeleniumTest {
+public class BasicSeleniumTest {
 
     @Container
     private BrowserWebDriverContainer chrome = new BrowserWebDriverContainer()
             .withCapabilities(DesiredCapabilities.chrome()).withRecordingMode(RECORD_ALL, new File("build"));
 
     @Test
-    void openTestcontainersWebsiteTest() {
+    public void openTestcontainersWebsiteTest() {
+    public void openTestcontainersWebsiteTest() throws Exception {
         // given
         RemoteWebDriver driver = chrome.getWebDriver();
 
         // when
         driver.get("https://www.testcontainers.org/");
+
+        // Just to get a longer video
+        Thread.sleep(3000);
 
         // then
         assertTrue(driver.getTitle().contains("Testcontainers"));

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.triffer.testcontainers.ui")
+@ComponentScan("com.triffer.testcontainers.person")
 public class TestcontainersExampleApplication {
 
     public static void main(String[] args) {

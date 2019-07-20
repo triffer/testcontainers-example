@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.ui;
+package com.triffer.testcontainers.person;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +18,6 @@ public class PersonController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("persons", personRepository.findAll());
-//        Person p = new Person();
-//        p.setId(1L);
-//        p.setName("Klaus");
-//
-//        model.addAttribute("persons", Collections.singletonList(p));
-
         return "persons";
     }
 }

@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.ui;
+package com.triffer.testcontainers.person;
 
 import java.io.File;
 import java.net.Inet4Address;
@@ -64,17 +64,20 @@ class PersonControllerIntegrationTest {
     @SqlGroup({
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestAfter.sql") })
-    void personsFromDbAreShownOnPage() throws Exception {
+    public void personsFromDbAreShownOnPage() throws Exception {
         // given
         String serverAddress = Inet4Address.getLocalHost().getHostAddress();
         RemoteWebDriver driver = chrome.getWebDriver();
 
         // when
-        // You should use chrome.getTestHostIpAddress(), but this is not working for me on Windows (may be because it'S currently best efforts).
+        // You should use chrome.getTestHostIpAddress(), but this lead to an error in my case.
         driver.get("http://" + serverAddress + ":" + serverPort + "/persons");
 
         // then
         List<WebElement> pElements = driver.findElementsByTagName("p");
+
+        // Just to get a longer video
+        Thread.sleep(3000);
 
         Assert.assertEquals(3, pElements.size());
         Assert.assertEquals("John", pElements.get(0).getText());

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import com.triffer.testcontainers.ui.Person;
-import com.triffer.testcontainers.ui.PersonRepository;
+import com.triffer.testcontainers.person.Person;
+import com.triffer.testcontainers.person.PersonRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

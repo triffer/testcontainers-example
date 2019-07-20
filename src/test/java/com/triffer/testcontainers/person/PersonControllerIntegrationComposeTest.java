@@ -1,12 +1,4 @@
-package com.triffer.testcontainers.ui;
-
-import java.io.File;
-import java.net.Inet4Address;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
+package com.triffer.testcontainers.person;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
@@ -36,7 +28,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = PersonControllerIntegrationComposeTest.Initializer.class)
-class PersonControllerIntegrationComposeTest {
+public class PersonControllerIntegrationComposeTest {
 
     @LocalServerPort
     private String serverPort;
@@ -88,13 +80,13 @@ class PersonControllerIntegrationComposeTest {
     @SqlGroup({
             @Sql(executionPhase = BEFORE_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestBefore.sql"),
             @Sql(executionPhase = AFTER_TEST_METHOD, scripts = "/dbTestdata/person/personIntegrationTestAfter.sql") })
-    void personsFromDbAreShownOnPage() throws Exception {
+    public void personsFromDbAreShownOnPage() throws Exception {
         // given
         String serverAddress = Inet4Address.getLocalHost().getHostAddress();
 
         // when
         /*
-        You can expose host ports to the containers but this is not working for me on Windows (may be because it'S currently best efforts).
+        You can expose host ports to the containers but this is not working for me.
         Testcontainers.exposeHostPorts(Integer.valueOf(serverPort));
         remoteWebDriver.get("http://host.testcontainers.internal:" + serverPort + "/persons");
         */
