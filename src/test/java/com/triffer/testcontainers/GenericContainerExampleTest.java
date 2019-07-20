@@ -1,7 +1,5 @@
 package com.triffer.testcontainers;
 
-import java.io.IOException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -12,10 +10,8 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.shaded.org.apache.http.HttpResponse;
-import org.testcontainers.shaded.org.apache.http.client.methods.HttpGet;
-import org.testcontainers.shaded.org.apache.http.client.methods.HttpUriRequest;
-import org.testcontainers.shaded.org.apache.http.impl.client.HttpClientBuilder;
+
+import java.io.IOException;
 
 @Testcontainers
 public class GenericContainerExampleTest {

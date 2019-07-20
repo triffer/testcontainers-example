@@ -1,14 +1,13 @@
 package com.triffer.testcontainers.person;
 
-import java.io.File;
-
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.io.File;
 
 import static org.junit.Assert.assertTrue;
 import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
@@ -21,7 +20,6 @@ public class BasicSeleniumTest {
             .withCapabilities(DesiredCapabilities.chrome()).withRecordingMode(RECORD_ALL, new File("build"));
 
     @Test
-    public void openTestcontainersWebsiteTest() {
     public void openTestcontainersWebsiteTest() throws Exception {
         // given
         RemoteWebDriver driver = chrome.getWebDriver();
