@@ -1,14 +1,13 @@
-package com.triffer.testcontainers.repository.base_class;
+package com.triffer.testcontainers.repository.singleton;
 
-import java.util.Set;
-
+import com.triffer.testcontainers.message.Message;
+import com.triffer.testcontainers.message.MessageRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import com.triffer.testcontainers.message.Message;
-import com.triffer.testcontainers.message.MessageRepository;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;

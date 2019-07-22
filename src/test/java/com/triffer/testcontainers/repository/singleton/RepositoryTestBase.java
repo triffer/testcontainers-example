@@ -1,4 +1,4 @@
-package com.triffer.testcontainers.repository.base_class;
+package com.triffer.testcontainers.repository.singleton;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
